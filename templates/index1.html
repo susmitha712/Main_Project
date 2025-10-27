@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Face Recognition</title>
+</head>
+<body>
+    <h1>Face Recognition Demo</h1>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <button type="submit">Detect</button>
+    </form>
+
+    <div style="margin-top:20px;">
+        {% if uploaded_image %}
+            <h2>Uploaded Image</h2>
+            <img src="{{ url_for('uploaded_file', filename=uploaded_image) }}" width="400">
+        {% endif %}
+
+        {% if output_image %}
+            <h2>Output Image</h2>
+            <img src="{{ url_for('output_file', filename=output_image) }}" width="400">
+        {% endif %}
+    </div>
+</body>
+</html>

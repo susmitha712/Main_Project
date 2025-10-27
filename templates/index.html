@@ -1,0 +1,723 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Face + ID + Shoe Detection</title>
+</head>
+<body>
+    <h1>Upload Image for Detection</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <input type="submit" value="Upload & Detect">
+    </form>
+
+    {% if uploaded_image or result_image %}
+        <h2>Results:</h2>
+        <div style="display:flex; gap:20px; align-items:flex-start;">
+            {% if uploaded_image %}
+            <div>
+                <h3>Uploaded Image</h3>
+                <img src="{{ url_for('uploaded_file', filename=uploaded_image) }}" width="400">
+            </div>
+            {% endif %}
+
+            
+            {% if result_image %}
+            <div>
+                <h3>Output Image</h3>
+                <img src="{{ url_for('output_file', filename=result_image) }}" width="400">
+            </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Face + ID + Shoe Detection</title>
+</head>
+<body>
+    <h1>Upload Image for Detection</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <input type="submit" value="Upload & Detect">
+    </form>
+
+   
+    {% if detection_message %}
+        <h3 style="color: green;">{{ detection_message }}</h3>
+    {% endif %}
+
+    {% if uploaded_image or result_image %}
+        <h2>Results:</h2>
+        <div style="display:flex; gap:20px; align-items:flex-start;">
+            {% if uploaded_image %}
+            <div>
+                <h3>Uploaded Image</h3>
+                <img src="{{ url_for('uploaded_file', filename=uploaded_image) }}" width="400">
+            </div>
+            {% endif %}
+
+            {% if result_image %}
+            <div>
+                <h3>Output Image</h3>
+                <img src="{{ url_for('output_file', filename=result_image) }}" width="400">
+            </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html> -->
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face + ID + Shoe Detection</title>
+    <style>
+        /* Reset & Fonts */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            color:black;
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            color: #000000;
+            font-weight: bold;
+        }
+
+        input[type="submit"] {
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: none;
+            background: #ff7f50;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background: #ff4500;
+            transform: translateY(-3px);
+        }
+
+        .message {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .images-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .image-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            padding: 15px;
+            text-align: center;
+            color:#000000;
+        }
+
+        .image-card img {
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .image-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            color: #ffd700;
+        }
+
+        @media(max-width: 900px){
+            .images-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Custom file upload button */
+.custom-file-upload {
+    display: inline-block;
+    padding: 12px 30px;
+    cursor: pointer;
+    border-radius: 25px;
+    background: #00c6ff;
+    background: linear-gradient(to right, #0072ff, #00c6ff);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.custom-file-upload:hover {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    transform: translateY(-3px);
+}
+
+.custom-file-upload input[type="file"] {
+    display: none; /* hide the default file input */
+}
+
+    </style>
+</head>
+<body>
+    <h1>Dress Code Violation Detection</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <input type="submit" value="Upload & Detect">
+    </form> -->
+    <!-- <form id="camera-form" method="POST" enctype="multipart/form-data">
+    <video id="camera" width="400" height="300" autoplay></video><br>
+    <button type="button" onclick="capturePhoto()">Capture Photo</button>
+    <input type="hidden" name="image" id="captured-image">
+    <input type="submit" value="Detect">
+</form>
+<form method="POST" enctype="multipart/form-data">
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="captureBtn">Capture</button>
+    <img id="result" src="">
+
+    <input type="file" name="image">
+    <button type="submit">Upload Image</button>
+</form>
+
+<a href="/camera"><button type="button">Capture from Camera</button></a>
+
+<canvas id="canvas" width="400" height="300" style="display:none;"></canvas>
+
+<script>
+    const video = document.getElementById('camera');
+    const canvas = document.getElementById('canvas');
+    const capturedImage = document.getElementById('captured-image');
+
+    // Access camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(err => {
+            alert("Camera access denied: " + err);
+        });
+
+    function capturePhoto() {
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = canvas.toDataURL('image/png');
+        capturedImage.value = imageData;
+        alert("Photo captured! Now click Detect.");
+    }
+</script>
+
+
+
+captureBtn.addEventListener('click', () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const dataURL = canvas.toDataURL('image/png');
+
+
+    resultImg.src = dataURL;
+
+ 
+    fetch('/', {
+        method: 'POST',
+        body: JSON.stringify({ image: dataURL }),
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => res.text())
+    .then(data => console.log(data));
+});
+</script>
+
+
+
+    {% if detection_message %}
+        <div class="message">
+            {{ detection_message }}
+        </div>
+    {% endif %}
+
+    {% if uploaded_image or result_image %}
+        <div class="images-container">
+            {% if uploaded_image %}
+            <div class="image-card">
+                <h3>Uploaded Image</h3>
+                <img src="{{ url_for('uploaded_file', filename=uploaded_image) }}" alt="Uploaded Image">
+            </div>
+            {% endif %}
+
+            {% if result_image %}
+            <div class="image-card">
+                <h3>Output Image</h3>
+                <img src="{{ url_for('output_file', filename=result_image) }}" alt="Output Image">
+            </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face + ID + Shoe Detection</title>
+    <style>
+        /* Keep your original style */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: white; min-height: 100vh; display: flex; flex-direction: column; align-items: center; color: #fff; padding: 20px; }
+        h1 { margin-bottom: 20px; text-align: center; font-size: 2.5rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.3); color:black; }
+        form { background: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 30px; }
+        input[type="file"] { padding: 10px; border-radius: 10px; border: none; cursor: pointer; background: rgba(255,255,255,0.2); color: #000000; font-weight: bold; }
+        input[type="submit"] { padding: 12px 30px; border-radius: 25px; border: none; background: #ff7f50; color: #fff; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; }
+        input[type="submit"]:hover { background: #ff4500; transform: translateY(-3px); }
+        .message { font-size: 1.2rem; font-weight: bold; padding: 10px 20px; border-radius: 10px; margin-bottom: 20px; background: rgba(0,0,0,0.3); }
+        .images-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+        .image-card { background: rgba(255,255,255,0.1); border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); padding: 15px; text-align: center; color:#000000; }
+        .image-card img { max-width: 400px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .image-card h3 { margin-bottom: 10px; font-size: 1.3rem; color: #ffd700; }
+        @media(max-width: 900px){ .images-container { flex-direction: column; align-items: center; } }
+        .custom-file-upload { display: inline-block; padding: 12px 30px; cursor: pointer; border-radius: 25px; background: linear-gradient(to right, #0072ff, #00c6ff); color: #fff; font-weight: bold; font-size: 1rem; transition: all 0.3s ease; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .custom-file-upload:hover { background: linear-gradient(to right, #00c6ff, #0072ff); transform: translateY(-3px); }
+        .custom-file-upload input[type="file"] { display: none; }
+        button[type="button"] { padding: 12px 30px; border-radius: 25px; border: none; background: #ff7f50; color: #fff; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; margin-bottom: 3%;}
+        button[type="button"]:hover { background: #ff4500; transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+    <h1>Dress Code Violation Detection</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <input type="submit" value="Upload & Detect">
+    </form> 
+    
+  
+<div class="camera-container">
+    <h3>Camera Capture</h3>
+    <video id="camera" width="400" height="300" autoplay></video>
+    <canvas id="snapshot" width="400" height="300" style="display:none;"></canvas>
+    <div style="margin-top: 10px;">
+        <button type="button" id="take-photo">Take Photo</button>
+        <button type="button" id="retake-photo" style="display:none;">Retake</button>
+        <button type="button" id="submit-photo" style="display:none;">Submit</button>
+    </div>
+</div>
+
+<script>
+    const video = document.getElementById('camera');
+    const canvas = document.getElementById('snapshot');
+    const takePhotoBtn = document.getElementById('take-photo');
+    const retakeBtn = document.getElementById('retake-photo');
+    const submitBtn = document.getElementById('submit-photo');
+
+    // Access the webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(err => console.error("Error accessing camera: ", err));
+
+    // Take snapshot
+    takePhotoBtn.addEventListener('click', () => {
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        video.style.display = 'none';
+        canvas.style.display = 'block';
+        takePhotoBtn.style.display = 'none';
+        retakeBtn.style.display = 'inline-block';
+        submitBtn.style.display = 'inline-block';
+    });
+
+    // Retake photo
+    retakeBtn.addEventListener('click', () => {
+        video.style.display = 'block';
+        canvas.style.display = 'none';
+        takePhotoBtn.style.display = 'inline-block';
+        retakeBtn.style.display = 'none';
+        submitBtn.style.display = 'none';
+    });
+
+    // Submit photo
+    submitBtn.addEventListener('click', () => {
+        canvas.toBlob(blob => {
+            const formData = new FormData();
+            formData.append('image', blob, 'camera_capture.png');
+
+            fetch('/', { method: 'POST', body: formData })
+                .then(response => response.text())
+                .then(data => {
+                    document.open();
+                    document.write(data);
+                    document.close();
+                })
+                .catch(err => console.error("Error submitting photo: ", err));
+        }, 'image/png');
+    });
+</script>
+
+    {% if detection_message %}
+        <div class="message">{{ detection_message }}</div>
+    {% endif %}
+
+
+    {% if uploaded_image or result_image %}
+        <div class="images-container">
+            {% if uploaded_image %}
+            <div class="image-card">
+                <h3>Uploaded Image</h3>
+                <img src="{{ url_for('uploaded_file', filename=uploaded_image) }}" alt="Uploaded Image">
+            </div>
+            {% endif %}
+
+            {% if result_image %}
+            <div class="image-card">
+                <h3>Output Image</h3>
+                <img src="{{ url_for('output_file', filename=result_image) }}" alt="Output Image">
+            </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dress Code Violation Detection</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: white; min-height: 100vh; display: flex; flex-direction: column; align-items: center; color: #fff; padding: 20px; }
+        h1 { margin-bottom: 20px; text-align: center; font-size: 2.5rem; color: black; }
+        form { background: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 30px; }
+        input[type="file"] { padding: 10px; border-radius: 10px; border: none; cursor: pointer; background: rgba(255,255,255,0.2); color: #000000; font-weight: bold; }
+        input[type="submit"] { padding: 12px 30px; border-radius: 25px; border: none; background: #ff7f50; color: #fff; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; }
+        input[type="submit"]:hover { background: #ff4500; transform: translateY(-3px); }
+        .message { font-size: 1.2rem; font-weight: bold; padding: 10px 20px; border-radius: 10px; margin-bottom: 20px; background: rgba(0,0,0,0.3); }
+        .images-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+        .image-card { background: rgba(255,255,255,0.1); border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); padding: 15px; text-align: center; color:#000000; }
+        .image-card img { max-width: 400px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .image-card h3 { margin-bottom: 10px; font-size: 1.3rem; color: #ffd700; }
+        button[type="button"] { padding: 12px 30px; border-radius: 25px; border: none; background: #ff7f50; color: #fff; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; margin-bottom: 3%; }
+        button[type="button"]:hover { background: #ff4500; transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+    <h1>Dress Code Violation Detection</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <input type="submit" value="Upload & Detect">
+    </form> 
+
+    <!-- Camera Capture Section -->
+    <div class="camera-container">
+        <h3>Camera Capture</h3>
+        <video id="camera" width="400" height="300" autoplay style="display:none;"></video>
+        <canvas id="snapshot" width="400" height="300" style="display:none;"></canvas>
+        <div style="margin-top: 10px;">
+            <button type="button" id="take-photo">Take Photo</button>
+            <button type="button" id="retake-photo" style="display:none;">Retake</button>
+            <button type="button" id="submit-photo" style="display:none;">Submit</button>
+        </div>
+    </div>
+
+    <!-- <script>
+        const video = document.getElementById('camera');
+        const canvas = document.getElementById('snapshot');
+        const takePhotoBtn = document.getElementById('take-photo');
+        const retakeBtn = document.getElementById('retake-photo');
+        const submitBtn = document.getElementById('submit-photo');
+        let stream = null;
+
+        // Open camera only when "Take Photo" is clicked
+        takePhotoBtn.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                video.style.display = 'block';
+                takePhotoBtn.style.display = 'none';
+                retakeBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'inline-block';
+            } catch (err) {
+                console.error("Error accessing camera:", err);
+            }
+        });
+
+        // Retake photo
+        retakeBtn.addEventListener('click', () => {
+            canvas.style.display = 'none';
+            video.style.display = 'block';
+        });
+
+        // Submit photo
+        submitBtn.addEventListener('click', () => {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.style.display = 'block';
+            video.style.display = 'none';
+
+            // Stop the camera after photo is taken
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append('image', blob, 'camera_capture.png');
+
+                fetch('/', { method: 'POST', body: formData })
+                    .then(response => response.text())
+                    .then(data => {
+                        document.open();
+                        document.write(data);
+                        document.close();
+                    })
+                    .catch(err => console.error("Error submitting photo:", err));
+            }, 'image/png');
+        });
+
+        // Prevent old results on page refresh
+        window.onload = () => {
+            if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+                window.location.replace(window.location.pathname);
+            }
+        };
+    </script> -->
+
+    <!-- <script>
+    const video = document.getElementById('camera');
+    const canvas = document.getElementById('snapshot');
+    const takePhotoBtn = document.getElementById('take-photo');
+    const retakeBtn = document.getElementById('retake-photo');
+    const submitBtn = document.getElementById('submit-photo');
+    let stream = null;
+
+    // Function to start the camera
+    async function startCamera() {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+            video.style.display = 'block';
+            canvas.style.display = 'none';
+        } catch (err) {
+            console.error("Error accessing camera:", err);
+        }
+    }
+
+    // Function to stop the camera
+    function stopCamera() {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+    }
+
+    // When "Take Photo" is clicked
+    takePhotoBtn.addEventListener('click', async () => {
+        await startCamera();
+        takePhotoBtn.style.display = 'none';
+        retakeBtn.style.display = 'inline-block';
+        submitBtn.style.display = 'inline-block';
+    });
+
+    // When "Retake" is clicked
+    retakeBtn.addEventListener('click', async () => {
+        stopCamera(); // stop any previous instance
+        await startCamera(); // start fresh camera
+    });
+
+    // When "Submit" is clicked
+    submitBtn.addEventListener('click', () => {
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.style.display = 'block';
+        video.style.display = 'none';
+
+        // Stop camera after capturing photo
+        stopCamera();
+
+        canvas.toBlob(blob => {
+            const formData = new FormData();
+            formData.append('image', blob, 'camera_capture.png');
+
+            fetch('/', { method: 'POST', body: formData })
+                .then(response => response.text())
+                .then(data => {
+                    document.open();
+                    document.write(data);
+                    document.close();
+                })
+                .catch(err => console.error("Error submitting photo:", err));
+        }, 'image/png');
+    });
+
+    // Clear results on page refresh
+    window.onload = () => {
+        if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+            window.location.replace(window.location.pathname);
+        }
+    };
+</script> -->
+<script>
+    const video = document.getElementById('camera');
+    const canvas = document.getElementById('snapshot');
+    const takePhotoBtn = document.getElementById('take-photo');
+    const retakeBtn = document.getElementById('retake-photo');
+    const submitBtn = document.getElementById('submit-photo');
+    let stream = null;
+
+    // Function to start the camera
+    async function startCamera() {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+            video.style.display = 'block';
+            canvas.style.display = 'none';
+        } catch (err) {
+            console.error("Error accessing camera:", err);
+        }
+    }
+
+    // Function to stop the camera
+    function stopCamera() {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+    }
+
+    // When "Take Photo" is clicked
+    takePhotoBtn.addEventListener('click', async () => {
+        await startCamera();
+        takePhotoBtn.style.display = 'none';
+        retakeBtn.style.display = 'inline-block';
+        submitBtn.style.display = 'inline-block';
+    });
+
+    // When "Retake" is clicked
+    retakeBtn.addEventListener('click', async () => {
+        stopCamera(); // stop any previous instance
+        await startCamera(); // start fresh camera
+    });
+
+    // When "Submit" is clicked
+    submitBtn.addEventListener('click', () => {
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.style.display = 'block';
+        video.style.display = 'none';
+
+        // Stop camera after capturing photo
+        stopCamera();
+
+        canvas.toBlob(blob => {
+            const formData = new FormData();
+            formData.append('image', blob, 'camera_capture.png');
+
+            fetch('/', { method: 'POST', body: formData })
+                .then(response => response.text())
+                .then(data => {
+                    document.open();
+                    document.write(data);
+                    document.close();
+                })
+                .catch(err => console.error("Error submitting photo:", err));
+        }, 'image/png');
+    });
+
+    // Clear results on page refresh
+    window.onload = () => {
+        if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+            window.location.replace(window.location.pathname);
+        }
+    };
+</script>
+
+
+    {% if detection_message %}
+        <div class="message">{{ detection_message }}</div>
+    {% endif %}
+
+    {% if uploaded_image or result_image %}
+        <div class="images-container">
+            {% if uploaded_image %}
+            <div class="image-card">
+                <h3>Uploaded Image</h3>
+                <img src="{{ url_for('uploaded_file', filename=uploaded_image) }}" alt="Uploaded Image">
+            </div>
+            {% endif %}
+
+            {% if result_image %}
+            <div class="image-card">
+                <h3>Output Image</h3>
+                <img src="{{ url_for('output_file', filename=result_image) }}" alt="Output Image">
+            </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Camera Capture</title>
+    <style>
+        body { text-align: center; font-family: Arial; padding: 20px; }
+        video, canvas { border: 1px solid #ccc; border-radius: 8px; }
+        button { margin: 10px; padding: 10px 20px; border-radius: 8px; background: #ff7f50; color: #fff; border: none; cursor: pointer; }
+        button:hover { background: #ff4500; }
+    </style>
+</head>
+<body>
+    <h1>Camera Capture</h1>
+    <video id="video" width="400" height="300" autoplay></video>
+    <canvas id="canvas" width="400" height="300" style="display:none;"></canvas>
+    <br>
+    <button id="captureBtn">Capture</button>
+    <button id="submitBtn" style="display:none;">Submit</button>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const captureBtn = document.getElementById('captureBtn');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Access camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => { video.srcObject = stream; })
+            .catch(err => { alert("Cannot access camera: " + err); });
+
+        captureBtn.addEventListener('click', () => {
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.style.display = 'block';
+            video.style.display = 'none';
+            captureBtn.style.display = 'none';
+            submitBtn.style.display = 'inline-block';
+        });
+
+        submitBtn.addEventListener('click', () => {
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append('image', blob, 'camera_capture.png');
+
+                fetch('/camera', {
+                    method: 'POST',
+                    body: formData
+                }).then(res => res.url ? window.location.href = res.url : null);
+            }, 'image/png');
+        });
+    </script>
+</body>
+</html>
