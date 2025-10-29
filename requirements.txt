@@ -9,3 +9,5 @@ imgaug
 #insightface
 onnxruntime
 inference-sdk==0.9.14
+dlib
+face_recognition
