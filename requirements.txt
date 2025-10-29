@@ -8,4 +8,4 @@ tqdm
 imgaug
 #insightface
 onnxruntime
-inference-sdk
+inference-sdk==0.9.14
