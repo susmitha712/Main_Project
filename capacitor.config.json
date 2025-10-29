@@ -1,0 +1,16 @@
+{
+  "appId": "com.susmitha.dresscode",
+  "appName": "Dress code detection",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "url": "https://unvisceral-chun-accommodatingly.ngrok-free.dev",
+    "cleartext": true,
+    "allowNavigation": [
+      "https://unvisceral-chun-accommodatingly.ngrok-free.dev",
+      "http://localhost",
+      "http://127.0.0.1",
+      "http://192.168.1.*"
+    ]
+  }
+}

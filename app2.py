@@ -299,8 +299,8 @@ app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
 OUTPUT_FOLDER = "output"
 DB_PATH = r"Facelive/database/student.db"
-FAISS_INDEX_PATH = r"C:\Users\Sushmitha\OneDrive\Desktop\Face csec3\Face csec\Facelive\database\test1.faiss"
-FAISS_MAPPING_PATH = r"C:\Users\Sushmitha\OneDrive\Desktop\Face csec3\Face csec\Facelive\database\embedding_id_to_student.npy"  # mapping array
+FAISS_INDEX_PATH = r"C:\Users\Sushmitha\Face csec\Facelive\database\test1.faiss"
+FAISS_MAPPING_PATH = r"C:\Users\Sushmitha\Face csec\Facelive\database\embedding_id_to_student.npy"  # mapping array
 
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)

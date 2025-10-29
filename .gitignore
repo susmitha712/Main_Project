@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+faceenv/
+venv/
+env/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build
+build/
+dist/
+android/.gradle/
+android/.idea/
+android/build/
+android/app/build/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
